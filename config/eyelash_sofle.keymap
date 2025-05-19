@@ -38,24 +38,92 @@
     behaviors {
     };
 
+    macros {
+        max: max {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LA(SPACE) &kp X>;
+            label = "MAX";
+        };
+
+        res: res {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LA(SPACE) &kp R>;
+            label = "RES";
+        };
+
+        min: min {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LA(BACKSPACE) &kp N>;
+            label = "MIN";
+        };
+
+        tabmod: tabmod {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_press>, <&mo 2 &kp LEFT_ALT>;
+
+            label = "TABMOD";
+        };
+
+        tab_param: tab_param {
+            compatible = "zmk,behavior-macro-one-param";
+            #binding-cells = <1>;
+            bindings = <&macro_param_1to1 &mo MACRO_PLACEHOLDER &kp LEFT_ALT>;
+            label = "TAB_PARAM";
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         layer0 {
             bindings = <
-&kp GRAVE   &kp N1                &kp N2        &kp N3        &kp N4  &kp N5       &kp UP_ARROW     &kp N6     &kp N7     &kp N8  &kp N9           &kp N0      &kp MINUS
-&kp TAB     &kp Q                 &kp W         &kp E         &kp R   &kp T        &kp DOWN_ARROW   &kp Y      &kp U      &kp I   &kp O            &kp P       &kp LEFT_BRACKET
-&kp CAPS    &kp A                 &kp S         &kp D         &kp F   &kp G        &kp LEFT_ARROW   &kp H      &kp J      &kp K   &kp L            &kp SEMI    &kp APOS
-&kp LSHFT   &kp NON_US_BACKSLASH  &kp Z         &kp X         &kp C   &kp V        &kp RIGHT_ARROW  &kp B      &kp N      &kp M   &kp COMMA        &kp PERIOD  &kp MINUS
-&kp C_MUTE  &kp LCTRL             &kp LEFT_GUI  &kp LEFT_ALT  &mo 1   &kp SPACE    &kp ENTER        &kp SPACE  &kp ENTER  &mo 2   &kp RIGHT_SHIFT  &kp DELETE
+&kp GRAVE  &kp N1                &kp N2  &kp N3  &kp N4  &kp N5            &none  &kp N6  &kp N7     &kp N8  &kp N9     &kp N0      &kp MINUS
+&kp TAB    &kp Q                 &kp W   &kp E   &kp R   &kp T             &none  &kp Y   &kp U      &kp I   &kp O      &kp P       &kp LEFT_BRACKET
+&kp CAPS   &kp A                 &kp S   &kp D   &kp F   &kp G             &none  &kp H   &kp J      &kp K   &kp L      &kp SEMI    &kp APOS
+&kp LSHFT  &kp NON_US_BACKSLASH  &kp Z   &kp X   &kp C   &kp V             &none  &kp B   &kp N      &kp M   &kp COMMA  &kp PERIOD  &kp MINUS
+&none      &none                 &none   &none   &none   &kp LEFT_SHIFT    &none  &mo 1   &kp SPACE  &mo 4   &none      &none
             >;
 
             display-name = "LAYER0";
         };
 
-        layer_1 {
+        tab {
             bindings = <
-&kp C_RESET  &kp F1           &kp F2          &kp F3           &kp F4           &kp F5             &mmv MOVE_UP     &kp F6     &kp F7           &kp F8       &kp F9         &kp F10   &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans             &trans        &trans             &trans      &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &max    &kp LS(LC(PG_UP))  &tab_param 2  &kp K_APPLICATION  &kp LA(F4)  &kp LC(W)
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &res    &kp LC(LS(TAB))    &tab_param 3  &kp LC(TAB)        &kp LG(D)   &kp LC(W)
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &min    &trans             &trans        &trans             &trans      &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans             &trans        &trans             &trans
+            >;
+        };
+
+        tab2 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans       &trans  &trans   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans       &trans  &trans   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &kp LS(TAB)  &trans  &kp TAB  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans       &trans  &trans   &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans       &trans  &trans   &trans
+            >;
+        };
+
+        tab3 {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans       &trans  &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &kp PG_UP    &trans  &kp PG_DN  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &kp LS(TAB)  &trans  &kp TAB    &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans       &trans  &trans     &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans       &trans  &trans     &trans
+            >;
+        };
+
+        nav {
+            bindings = <
+&kp C_RESET  &kp F1           &kp F2          &kp F3           &kp F4           &kp F5             &mmv MOVE_UP     &kp F6     &kp F7           &kp F8       &kp F9         &kp F10   &kp F11
 &trans       &kp GRAVE        &mkp LCLK       &mkp MCLK        &mkp RCLK        &mkp MB4           &mmv MOVE_DOWN   &kp HOME   &kp LC(LEFT)     &kp UP       &kp LC(RIGHT)  &kp END   &kp EQUAL
 &trans       &kp TILDE        &trans          &trans           &trans           &mkp MB5           &mmv MOVE_LEFT   &kp PG_UP  &kp LEFT         &kp LS(TAB)  &kp RIGHT      &kp DOWN  &kp TAB
 &trans       &rgb_ug RGB_OFF  &rgb_ug RGB_ON  &rgb_ug RGB_EFF  &rgb_ug RGB_EFR  &rgb_ug RGB_SPI    &mmv MOVE_RIGHT  &kp PG_DN  &rgb_ug RGB_BRD  &kp INSERT   &kp F11        &kp F12   &trans
@@ -63,48 +131,15 @@
             >;
 
             display-name = "layer1";
-            sensor-bindings = <&scroll_encoder>;
         };
 
-        layer_2 {
+        Fkeys {
             bindings = <
 &kp TILDE  &bt BT_SEL 0  &bt BT_SEL 1    &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &mmv MOVE_UP     &kp F6  &kp F7  &kp F8      &kp F9     &kp F10      &trans
 &trans     &bt BT_CLR    &bt BT_CLR_ALL  &trans        &trans        &trans          &mmv MOVE_DOWN   &trans  &trans  &kp F11     &kp F12    &kp UNDER    &kp PLUS
 &trans     &out OUT_USB  &out OUT_BLE    &trans        &trans        &trans          &mmv MOVE_LEFT   &trans  &trans  &trans      &trans     &kp LBRC     &kp RBRC
 &trans     &sys_reset    &trans          &bootloader   &trans        &trans          &mmv MOVE_RIGHT  &trans  &trans  &sys_reset  &soft_off  &bootloader  &trans
 &trans     &trans        &trans          &trans        &trans        &trans          &mkp LCLK        &trans  &trans  &trans      &trans     &trans
-            >;
-
-            sensor-bindings = <&scroll_encoder>;
-        };
-
-        layer_3 {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            >;
-        };
-
-        layer_4 {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            >;
-        };
-
-        layer_5 {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
     };
